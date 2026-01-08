@@ -1,15 +1,17 @@
 # Task Manager Application
 
-This roject is a full-stack Task Manager application developed for educational purposes. It demonstrates the use of modern web technologies such as React, Typescript, Node.js, Exxpress, and MongoDB.
+This project is a Task Manager application developed for educational purposes. It demonstrates the use of modern web technologies such as React, Typescript and MongoDB.
 
-The project is structured into frontend (client) and backend (server) parts
+The project is structured into:
 
-## Technologies
+Frontend (client): Build with React and Typescript, providing a responsive and interactive user interface.
 
-Frontend: React, TypeScript, Vite  
-Backend: Node.js, Express, MongoDB
+Database (MongoDB): Used to store tasks and persist user data. The frontend communicates directly with the MongoDB database.
 
-## Running the Project
+## Features
 
-Frontend: `npm install && npm run dev`  
-Backend: `npm install && npm start`
+-User Authentication: Register new users and login to access tasks
+-Create, read, update and delete tasks
+-Mark tasks as completed
+-Responsive design
+-Uses MongoDB for data persistence
