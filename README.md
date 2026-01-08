@@ -10,8 +10,8 @@ Database (MongoDB): Used to store tasks and persist user data. The frontend comm
 
 ## Features
 
--User Authentication: Register new users and login to access tasks
--Create, read, update and delete tasks
--Mark tasks as completed
--Responsive design
--Uses MongoDB for data persistence
+User Authentication: Register new users and login to access tasks
+Create, read, update and delete tasks
+Mark tasks as completed
+Responsive design
+Uses MongoDB for data persistence
