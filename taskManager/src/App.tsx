@@ -1,20 +1,16 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import Select from './components/Select/Select'
 
 function App() {
-  const [data, setData] = useState()
-
-  useEffect(() => {
-    async function grabData() {
-      const response = await axios.get('http://localhost:3000/')
-      if (response.status === 200) {
-        setData(response.data)
-      }
-    }
-    grabData()
-  }, [])
-
-  return <div>{JSON.stringify(data)}</div>
+  const categories = [
+    { label: 'Elektronikë', value: 'electronics' },
+    { label: 'Veshmbathje', value: 'clothes' },
+    { label: 'Ushqime', value: 'food' },
+  ]
+  return (
+    <div>
+      <Select label="Kategoria" options={categories} />
+    </div>
+  )
 }
 
 export default App
