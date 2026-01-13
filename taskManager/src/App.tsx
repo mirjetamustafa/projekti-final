@@ -1,11 +1,5 @@
-import Login from './pages/Login/Login'
-
 function App() {
-  return (
-    <div>
-      <Login />
-    </div>
-  )
+  return <div className="grid grid-cols-3 gap-4 p-5"></div>
 }
 
 export default App
