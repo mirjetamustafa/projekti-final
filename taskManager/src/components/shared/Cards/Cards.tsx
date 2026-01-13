@@ -1,9 +1,14 @@
+import { useEffect, useRef, useState } from 'react'
+import { categoryColors } from '../utils/categoryColors'
+
 type CardsProps = {
   title: string
   description?: string
   status: 'in progress' | 'done' | 'todo'
   category: string
   priority?: 'low' | 'medium' | 'high'
+  onEdit?: () => void
+  onDelete?: () => void
 }
 
 const statusStyle = {
@@ -13,7 +18,7 @@ const statusStyle = {
 }
 
 const priorityStyle = {
-  low: 'border-l-green-400',
+  low: 'border-l-gray-300',
   medium: 'border-l-yellow-400',
   high: 'border-l-red-400',
 }
@@ -25,6 +30,20 @@ const Cards = ({
   category,
   priority = 'medium',
 }: CardsProps) => {
+  const [openMenu, setOpenMenu] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpenMenu(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
   return (
     <div
       className={`bg-white rounded-lg border-gray-200 p-4 border-l-4 hover:shadow-md ${priorityStyle[priority]} shadow-sm`}
@@ -32,7 +51,38 @@ const Cards = ({
       <div className="flex justify-between items-start">
         <h3 className="font-semibold text-gray-800"> {title} </h3>
 
-        <button className="text-gray-400 hover:text-gray-600">⋮</button>
+        <div className="relative" ref={menuRef}>
+          <button
+            type="button"
+            onClick={() => setOpenMenu((prev) => !prev)}
+            className="text-gray-400 hover:text-gray-600 focus:outline-none cursor-pointer"
+          >
+            ⋮
+          </button>
+          {openMenu && (
+            <div className="absolute right-0 mt-2 w-28 bg-white border border-gray-100  rounded-md shadow-lg z-10">
+              <button
+                onClick={() => {
+                  setOpenMenu(false)
+                  onEdit?.()
+                }}
+                className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={() => {
+                  setOpenMenu(false)
+                  onDelete?.()
+                }}
+                className="w-full text-left px-3 py-2 text-red-600 text-sm hover:bg-red-50"
+              >
+                Delete
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {description && (
@@ -45,8 +95,12 @@ const Cards = ({
         >
           {status}
         </span>
-        <div className="flex items-center gap-1 text-sm text-gray-600">
-          <span className="w-2 h-2 rounded-full bg-purple-500"></span>
+        <div className="flex items-center gap-1 text-xs text-gray-600">
+          <span
+            className={`w-2 h-2 rounded-full ${
+              categoryColors[category]?.dot || 'bg-gray-400'
+            }`}
+          />
           {category}
         </div>
       </div>
