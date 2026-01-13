@@ -1,14 +1,9 @@
-import Select from './components/Select/Select'
+import Login from './pages/Login/Login'
 
 function App() {
-  const categories = [
-    { label: 'Elektronikë', value: 'electronics' },
-    { label: 'Veshmbathje', value: 'clothes' },
-    { label: 'Ushqime', value: 'food' },
-  ]
   return (
     <div>
-      <Select label="Kategoria" options={categories} />
+      <Login />
     </div>
   )
 }

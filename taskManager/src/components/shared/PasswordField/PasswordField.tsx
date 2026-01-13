@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import eyeOn from '../../assets/eyeOn.svg'
-import eyeOff from '../../assets/eyeOff.svg'
+import eyeOn from '../../../assets/eyeOn.svg'
+import eyeOff from '../../../assets/eyeOff.svg'
 
 type PasswordInputProps = {
   label?: string
