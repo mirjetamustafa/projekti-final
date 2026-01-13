@@ -29,6 +29,8 @@ const Cards = ({
   status,
   category,
   priority = 'medium',
+  onEdit,
+  onDelete,
 }: CardsProps) => {
   const [openMenu, setOpenMenu] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
