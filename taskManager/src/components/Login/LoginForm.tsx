@@ -18,7 +18,9 @@ const LoginForm = () => {
                 placeholder="email@example.com"
               />
               <PasswordField label="Password" placeholder="••••••••" />
-              <Button>Sign in</Button>
+              <Button className="bg-blue-600 text-white py-3 my-3">
+                Sign in
+              </Button>
             </div>
           </form>
           <p className="text-xs text-center text-gray-500">

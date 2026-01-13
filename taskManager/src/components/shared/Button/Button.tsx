@@ -3,6 +3,7 @@ type ButtonProps = {
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
+  className?: string
 }
 
 const Button = ({
@@ -10,14 +11,16 @@ const Button = ({
   onClick,
   type = 'button',
   disabled = false,
+  className = '',
 }: ButtonProps) => {
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`bg-blue-600 text-xs text-white w-full font-bold rounded-md  my-3 py-3 hover:bg-blue-500 
-        ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+      className={` text-xs w-full font-bold rounded-md hover:bg-blue-500 
+        ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+        ${className}`}
     >
       {children}
     </button>

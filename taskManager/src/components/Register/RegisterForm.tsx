@@ -22,7 +22,9 @@ const RegisterForm = () => {
               />
               <PasswordField label="Password" placeholder="••••••••" />
               <PasswordField label="Confirm Password" placeholder="••••••••" />
-              <Button>Create account</Button>
+              <Button className="bg-blue-600 text-white py-3 my-3">
+                Create account
+              </Button>
             </div>
           </form>
           <p className="text-xs text-center text-gray-500">
