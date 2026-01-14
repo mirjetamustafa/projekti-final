@@ -1,5 +1,7 @@
+import type { Category } from '../../types/task'
+
 export const categoryColors: Record<
-  string,
+  Category,
   {
     dot: string
     border: string
