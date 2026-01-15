@@ -15,9 +15,7 @@ const Sidebar = ({ selectedCategory, onSelectedCategory }: SidebarProps) => {
       <Button
         onClick={() => onSelectedCategory(null)}
         variant={selectedCategory === null ? 'active' : 'default'}
-        className={`bg-gray-50 p-2 ${
-          selectedCategory === null ? 'bg-gray-100' : ''
-        }`}
+        className={`p-2 ${selectedCategory === null ? 'bg-gray-100' : ''}`}
       >
         All Tasks
       </Button>

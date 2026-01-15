@@ -5,6 +5,8 @@ type InputProps = {
   value?: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   error?: string
+  icon?: React.ReactNode
+  isSearch?: boolean
 }
 
 const Input = ({
@@ -14,6 +16,8 @@ const Input = ({
   value,
   onChange,
   error,
+  icon,
+  isSearch = false,
 }: InputProps) => {
   return (
     <div className="mb-4">
@@ -22,17 +26,26 @@ const Input = ({
           {label}
         </label>
       )}
+      <div className="relative">
+        {icon && (
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            {' '}
+            {icon}{' '}
+          </span>
+        )}
 
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        className={`w-full p-2 text-xs  border rounded-md outline-none
-          focus:ring-1 focus:ring-blue-500 ${
-            error ? 'border-red-500' : 'border-gray-200'
-          }`}
-      />
+        <input
+          type={isSearch ? 'search' : type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          className={`w-full p-2 text-xs  border rounded-md outline-none
+          focus:ring-1 focus:ring-blue-500
+          ${icon ? 'pl-9' : ''}
+          ${error ? 'border-red-500' : 'border-gray-200'}`}
+        />
+      </div>
+
       {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
     </div>
   )
