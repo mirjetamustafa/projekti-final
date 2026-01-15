@@ -4,7 +4,7 @@ export const createTask = async (taskData: any) => {
   return await apiRequest({
     url: 'api/tasks',
     method: 'POST',
-    data: { task, taskData },
+    data: taskData,
   })
 }
 

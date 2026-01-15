@@ -1,4 +1,4 @@
-export type Category = 'Personal' | 'Work' | 'Ideas' | 'Marketing'
+export type Category = 'Personal' | 'Work' | 'Ideas'
 
 export type Task = {
   id: string

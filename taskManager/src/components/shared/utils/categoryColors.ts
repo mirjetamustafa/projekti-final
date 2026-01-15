@@ -1,4 +1,4 @@
-import type { Category } from '../../types/task'
+import type { Category } from './types/task'
 
 export const categoryColors: Record<
   Category,
@@ -20,3 +20,35 @@ export const categoryColors: Record<
     border: 'border-l-green-600',
   },
 }
+
+export const categoryOptions = [
+  { label: 'Work', value: 'Work' },
+  { label: 'Personal', value: 'Personal' },
+  { label: 'Ideas', value: 'Ideas' },
+]
+
+export const statusOptions = [
+  { label: 'To do', value: 'todo' },
+  { label: 'In progress', value: 'in progress' },
+  { label: 'Done', value: 'done' },
+]
+
+export const priorityOptions = [
+  { label: 'Low', value: 'low' },
+  { label: 'Medium', value: 'medium' },
+  { label: 'High', value: 'high' },
+]
+
+export const statusOptionsFilter = [
+  { label: 'All Status', value: '' },
+  { label: 'To do', value: 'todo' },
+  { label: 'In progress', value: 'in progress' },
+  { label: 'Done', value: 'done' },
+]
+
+export const priorityOptionsFilter = [
+  { label: 'All Priority', value: '' },
+  { label: 'Low', value: 'low' },
+  { label: 'Medium', value: 'medium' },
+  { label: 'High', value: 'high' },
+]

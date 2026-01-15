@@ -1,5 +1,6 @@
 type InputProps = {
   label?: string
+  name?: string
   type?: string
   placeholder?: string
   value?: string
@@ -11,6 +12,7 @@ type InputProps = {
 
 const Input = ({
   label,
+  name,
   type = 'text',
   placeholder,
   value,
@@ -36,6 +38,7 @@ const Input = ({
 
         <input
           type={isSearch ? 'search' : type}
+          name={name}
           placeholder={placeholder}
           value={value}
           onChange={onChange}

@@ -1,6 +1,6 @@
 import Button from '../shared/Button/Button'
 import { categoryColors } from '../shared/utils/categoryColors'
-import type { Category } from '../types/task'
+import type { Category } from '../shared/utils/types/task'
 
 type SidebarProps = {
   selectedCategory: Category | null
@@ -15,7 +15,9 @@ const Sidebar = ({ selectedCategory, onSelectedCategory }: SidebarProps) => {
       <Button
         onClick={() => onSelectedCategory(null)}
         variant={selectedCategory === null ? 'active' : 'default'}
-        className={`p-2 ${selectedCategory === null ? 'bg-gray-100' : ''}`}
+        className={`p-2 ${
+          selectedCategory === null ? 'bg-gray-100' : ''
+        } hover:bg-gray-100`}
       >
         All Tasks
       </Button>
@@ -28,7 +30,7 @@ const Sidebar = ({ selectedCategory, onSelectedCategory }: SidebarProps) => {
             key={cat}
             onClick={() => onSelectedCategory(cat)}
             variant={selectedCategory === cat ? 'active' : 'default'}
-            className={`flex items-center gap-3 p-2 ${
+            className={`flex items-center gap-3 p-2 hover:bg-gray-100 ${
               selectedCategory === cat ? 'bg-gray-100' : ''
             }`}
           >

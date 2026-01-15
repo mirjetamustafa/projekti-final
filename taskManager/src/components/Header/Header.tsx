@@ -15,7 +15,7 @@ const Header = () => {
         </div>
         <div>
           <div className="flex gap-4">
-            <div className="flex gap-2 text-xs mt-1">
+            <div className="flex gap-2 text-xs mt-1.5">
               <UserIcon className="w-4 h-4 text-gray-500" />
               <p className="text-gray-600">Mirjeta</p>
             </div>

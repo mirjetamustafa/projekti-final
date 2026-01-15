@@ -1,11 +1,19 @@
 import { useState } from 'react'
 import Header from '../../components/Header/Header'
 import Sidebar from '../../components/Sidebar/Sidebar'
-import type { Category, Task } from '../../components/types/task'
+import type { Category, Task } from '../../components/shared/utils/types/task'
 import Cards from '../../components/shared/Cards/Cards'
 import Input from '../../components/shared/Input/Input'
 import SearchIcon from '../../assets/searchIcon.svg?react'
+import Plus from '../../assets/plus.svg?react'
 import Select from '../../components/shared/Select/Select'
+import Modal from '../../components/shared/Modal/Modal'
+import {
+  priorityOptionsFilter,
+  statusOptionsFilter,
+} from '../../components/shared/utils/categoryColors'
+import TaskForm from '../../components/TaskForm/TaskForm'
+import Button from '../../components/shared/Button/Button'
 
 const tasks: Task[] = [
   {
@@ -26,6 +34,7 @@ const tasks: Task[] = [
 ]
 
 const Home = () => {
+  const [open, setOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   )
@@ -53,8 +62,9 @@ const Home = () => {
             />
 
             <div className="grid grid-cols-2 gap-2">
-              <Input placeholder="all status" />
-              <Input placeholder="All priorty" />
+              <Select options={statusOptionsFilter} />
+
+              <Select options={priorityOptionsFilter} />
             </div>
           </div>
 
@@ -71,6 +81,19 @@ const Home = () => {
             ))}
           </div>
         </main>
+      </div>
+      <div className="flex justify-end bg-gray-50">
+        <Button
+          onClick={() => setOpen(true)}
+          variant="icon"
+          className="-mt-12 mx-3 mb-2 rounded-full"
+        >
+          <Plus />
+        </Button>
+
+        <Modal isOpen={open} onClose={() => setOpen(false)} title="Create Task">
+          <TaskForm />
+        </Modal>
       </div>
     </div>
   )

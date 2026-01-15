@@ -2,7 +2,7 @@ type ButtonProps = {
   children: React.ReactNode
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
-  variant?: 'default' | 'active'
+  variant?: 'default' | 'active' | 'icon'
   className?: string
 }
 
@@ -13,17 +13,16 @@ const Button = ({
   variant = 'default',
   className = '',
 }: ButtonProps) => {
+  const variants: Record<string, string> = {
+    default: 'w-full text-xs font-bold text-gray-700  px-3 py-2 rounded-md',
+    active: 'w-full text-xs font-bold text-gray-700 px-3 py-2 rounded-md',
+    icon: 'w-auto p-2 text-white bg-blue-600 hover:bg-blue-700 flex items-center justify-center',
+  }
   return (
     <button
       type={type}
       onClick={onClick}
-      className={` text-xs w-full font-bold rounded-md hover:bg-gray-100 cursor-pointer 
-        ${
-          variant === 'active'
-            ? 'text-gray-700'
-            : 'hover:bg-gray-100 text-gray-700'
-        }
-        ${className}`}
+      className={`${variants[variant]} ${className} cursor-pointer`}
     >
       {children}
     </button>
