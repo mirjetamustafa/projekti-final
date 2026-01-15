@@ -1,16 +1,28 @@
-const connect = require('./connect')
 const express = require('express')
 const cors = require('cors')
-const tasks = require('./routes/tasks')
+const connect = require('./connect')
+const tasksRoutes = require('./routes/tasks')
 
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 4000
 
+// Middleware
 app.use(cors())
-app.use(express.json())
-app.use(tasks)
+app.use(express.json()) // për të lexuar JSON nga frontend
 
-app.listen(PORT, () => {
-  connect.connectToServer()
-  console.log(`Server is runnng on port ${PORT}`)
-})
+// Routes
+app.use('/api/tasks', tasksRoutes)
+
+// Start server
+const startServer = async () => {
+  try {
+    await connect.connectToServer()
+    app.listen(PORT, () => {
+      console.log(`✅ Server is running on port ${PORT}`)
+    })
+  } catch (err) {
+    console.error('❌ Failed to start server:', err)
+  }
+}
+
+startServer()
