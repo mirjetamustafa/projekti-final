@@ -11,7 +11,7 @@ module.exports = {
       database = client.db('taskManager')
       console.log('✅ Connected to MongoDB')
     } catch (err) {
-      console.error('❌ Failed to connect to MongoDB:', err)
+      console.error('Failed to connect to MongoDB:', err)
       process.exit(1) // ndal serverin nëse nuk lidhet
     }
   },
