@@ -8,10 +8,11 @@ import {
 
 import Button from '../shared/Button/Button'
 import Textarea from '../shared/Textarea/Textarea'
-import type { TaskFormType } from '../../api/Task/task.types'
-import React, { useState } from 'react'
+import type { TaskFormType, TaskResponse } from '../../api/Task/task.types'
+import React, { useEffect, useState } from 'react'
 import { createTask } from '../../api/Task/task.client'
 import { toast } from 'react-toastify'
+import { updateTask } from '../../api/Task/task'
 
 const initialValues: TaskFormType = {
   title: '',
@@ -21,8 +22,23 @@ const initialValues: TaskFormType = {
   priority: '',
 }
 
-const TaskForm = () => {
-  const [formValues, setFormValues] = useState<TaskFormType>(initialValues)
+type TaskFormProps = {
+  initialData?: TaskResponse | null
+  onSuccess?: () => void
+}
+
+const TaskForm = ({ initialData, onSuccess }: TaskFormProps) => {
+  const [formValues, setFormValues] = useState<TaskFormType>(
+    initialData
+      ? {
+          title: initialData.title,
+          description: initialData.description,
+          project: initialData.project,
+          status: initialData.status,
+          priority: initialData.priority,
+        }
+      : initialValues
+  )
   const [errors, setErrors] = useState<Partial<TaskFormType>>({})
 
   const handleChange = (
@@ -59,12 +75,15 @@ const TaskForm = () => {
       return
     }
 
-    console.log('Payload to server:', formValues)
-
     try {
-      console.log('Sending to server', formValues)
-      await createTask(formValues)
-      toast.success('Task created successfully!')
+      if (initialData?._id) {
+        await updateTask(initialData._id, formValues)
+        toast.success('Task updated successfully!')
+      } else {
+        await createTask(formValues)
+        toast.success('Task created successfully!')
+      }
+      onSuccess?.()
       setFormValues(initialValues)
     } catch (err: any) {
       console.log(err.response?.data)
@@ -76,6 +95,19 @@ const TaskForm = () => {
       }
     }
   }
+  useEffect(() => {
+    if (initialData) {
+      setFormValues({
+        title: initialData.title,
+        description: initialData.description,
+        project: initialData.project,
+        status: initialData.status,
+        priority: initialData.priority,
+      })
+    } else {
+      setFormValues(initialValues)
+    }
+  }, [initialData])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -126,7 +158,10 @@ const TaskForm = () => {
       <div className="grid grid-cols-2 gap-4">
         <Button
           type="submit"
-          onClick={() => setFormValues(initialValues)}
+          onClick={() => {
+            setFormValues(initialValues)
+            onSuccess?.()
+          }}
           className="bg-gray-100 hover:bg-gray-50"
         >
           Cancel
@@ -136,7 +171,7 @@ const TaskForm = () => {
           type="submit"
           className="bg-blue-600 text-white hover:bg-blue-500"
         >
-          Create Task
+          {initialData ? 'Update Task' : 'Create Task'}
         </Button>
       </div>
     </form>

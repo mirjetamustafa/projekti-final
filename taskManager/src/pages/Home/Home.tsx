@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import Header from '../../components/Header/Header'
 import Sidebar from '../../components/Sidebar/Sidebar'
-import type { Category, Task } from '../../components/shared/utils/types/task'
-import Cards from '../../components/shared/Cards/Cards'
+import type { Category } from '../../components/shared/utils/types/task'
 import Input from '../../components/shared/Input/Input'
 import SearchIcon from '../../assets/searchIcon.svg?react'
 import Plus from '../../assets/plus.svg?react'
@@ -14,24 +13,8 @@ import {
 } from '../../components/shared/utils/categoryColors'
 import TaskForm from '../../components/TaskForm/TaskForm'
 import Button from '../../components/shared/Button/Button'
-
-const tasks: Task[] = [
-  {
-    id: '1',
-    title: 'Task 1',
-    description: 'Desc',
-    status: 'done',
-    category: 'Work',
-  },
-  {
-    id: '2',
-    title: 'Task 2',
-    description: 'Desc',
-    status: 'in progress',
-    category: 'Personal',
-    priorty: 'high',
-  },
-]
+import Task from '../../components/Tasks/Task'
+import type { TaskResponse } from '../../api/Task/task.types'
 
 const Home = () => {
   const [open, setOpen] = useState(false)
@@ -39,9 +22,17 @@ const Home = () => {
     null
   )
 
-  const filteredTasks = selectedCategory
-    ? tasks.filter((t) => t.category === selectedCategory)
-    : tasks
+  const [editTask, setEditTask] = useState<TaskResponse | null>(null)
+
+  const handleCreate = () => {
+    setEditTask(null)
+    setOpen(true)
+  }
+
+  const handleEdit = (task: TaskResponse) => {
+    setEditTask(task)
+    setOpen(true)
+  }
 
   return (
     <div>
@@ -68,31 +59,35 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 p-6">
-            {filteredTasks.map((task) => (
-              <div key={task.id}>
-                <Cards
-                  title={task.title}
-                  description={task.description}
-                  status={task.status}
-                  category={task.category}
-                />
-              </div>
-            ))}
+          <div className="p-6">
+            <Task onEdit={handleEdit} />
           </div>
         </main>
       </div>
       <div className="flex justify-end bg-gray-50">
         <Button
-          onClick={() => setOpen(true)}
+          onClick={handleCreate}
           variant="icon"
           className="-mt-12 mx-3 mb-2 rounded-full"
         >
           <Plus />
         </Button>
 
-        <Modal isOpen={open} onClose={() => setOpen(false)} title="Create Task">
-          <TaskForm />
+        <Modal
+          isOpen={open}
+          onClose={() => {
+            setOpen(false)
+            setEditTask(null)
+          }}
+          title={editTask ? 'Edit Task' : 'Create Task'}
+        >
+          <TaskForm
+            initialData={editTask}
+            onSuccess={() => {
+              setOpen(false)
+              setEditTask(null)
+            }}
+          />
         </Modal>
       </div>
     </div>
