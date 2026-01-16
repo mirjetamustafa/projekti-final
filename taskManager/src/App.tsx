@@ -1,12 +1,22 @@
 import { ToastContainer } from 'react-toastify'
+import { BrowserRouter } from 'react-router'
+import { Routes } from './routes/Routes'
+import { AuthProvider } from './lib/AuthContext'
 import 'react-toastify/dist/ReactToastify.css'
-import Home from './pages/Home/Home'
 
 function App() {
   return (
     <div className="">
       <ToastContainer />
-      <Home />
+      {/* <Home /> */}
+      {/* <Register /> */}
+      {/* <Login /> */}
+
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes />
+        </AuthProvider>
+      </BrowserRouter>
     </div>
   )
 }

@@ -1,8 +1,34 @@
+import { useState } from 'react'
 import Button from '../shared/Button/Button'
 import Input from '../shared/Input/Input'
 import PasswordField from '../shared/PasswordField/PasswordField'
+import { loginUser } from '../../api/User/user'
+import { toast } from 'react-toastify'
+
+const initialForm = {
+  email: '',
+  password: '',
+}
 
 const LoginForm = () => {
+  const [loginData, setLoginData] = useState(initialForm)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const res = await loginUser(loginData)
+      console.log('Logged in user:', res.data)
+      toast.success('Login successful!')
+    } catch (err: any) {
+      console.error(err)
+      toast.error('Login failed')
+    }
+  }
+
   return (
     <div className="flex items-center justify-center h-screen bg-gray-50">
       <div className="grid justify-center">
@@ -10,15 +36,27 @@ const LoginForm = () => {
           <h1 className="text-2xl font-bold py-1 text-blue-500">Login</h1>
         </div>
         <div className="border border-gray-200 bg-white shadow-xs rounded-md p-5 w-[450px]">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className=" m-3">
               <Input
                 label="Email"
                 type="email"
+                name="email"
+                value={loginData.email}
+                onChange={handleChange}
                 placeholder="email@example.com"
               />
-              <PasswordField label="Password" placeholder="••••••••" />
-              <Button className="bg-blue-600 text-white py-3 my-3">
+              <PasswordField
+                label="Password"
+                name="password"
+                value={loginData.password}
+                onChange={handleChange}
+                placeholder="••••••••"
+              />
+              <Button
+                type="submit"
+                className="bg-blue-600 text-white py-3 my-3"
+              >
                 Sign in
               </Button>
             </div>
