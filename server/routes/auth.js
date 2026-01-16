@@ -2,75 +2,99 @@ const express = require('express')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
-const ObjectId = require('mongodb').ObjectId
 
 // Register
 router.post('/register', async (req, res) => {
   try {
-    const { email, password, role } = req.body
+    const { name, email, password, role } = req.body.credentials
     const db = req.app.get('db')
 
-    // Kontrollo nëse user ekziston
-    const existingUser = await db.collection('users').findOne({ email })
-    if (existingUser) {
-      return res.status(400).json({ errors: { email: 'User already exists' } })
+    if (!name || !email || !password) {
+      return res
+        .status(400)
+        .json({ error: 'Name, email and password required' })
     }
 
-    // Hash password
+    const existingUser = await db.collection('users').findOne({ email })
+    if (existingUser) {
+      return res.status(400).json({ error: 'User already exists' })
+    }
+
     const hashedPassword = bcrypt.hashSync(password, 10)
 
     const newUser = {
+      name,
       email,
       password: hashedPassword,
       role: role || 'user',
       createdAt: new Date(),
     }
+    console.log('USER TO INSERT:', newUser)
 
     const result = await db.collection('users').insertOne(newUser)
 
-    res.status(201).json({ message: 'User created', _id: result.insertedId })
+    res.status(201).json({
+      message: 'User created',
+      user: {
+        id: result.insertedId,
+        name,
+        email,
+        role: newUser.role,
+      },
+    })
   } catch (err) {
-    console.error(err)
-    res.status(500).json({ errors: { global: err.message } })
+    res.status(500).json({ error: err.message })
   }
 })
 
-// === LOGIN ===
+// Login
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body
+    const { email, password } = req.body.credentials
     const db = req.app.get('db')
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password required' })
+    }
 
     const user = await db.collection('users').findOne({ email })
     if (!user) {
-      return res.status(401).json({ errors: { global: 'Invalid credentials' } })
+      return res.status(401).json({ error: 'Invalid credentials' })
     }
 
     const isMatch = bcrypt.compareSync(password, user.password)
     if (!isMatch) {
-      return res.status(401).json({ errors: { global: 'Invalid credentials' } })
+      return res.status(401).json({ error: 'Invalid credentials' })
     }
 
     const token = jwt.sign(
       {
         user: {
           _id: user._id,
+          name: user.name,
           email: user.email,
           role: user.role,
         },
       },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' } // token 7 ditë
+      { expiresIn: '7d' }
     )
 
-    res.json({ token })
+    res.json({
+      token,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    })
   } catch (err) {
-    console.error(err)
-    res.status(500).json({ errors: { global: err.message } })
+    res.status(500).json({ error: err.message })
   }
 })
 
-// === MIDDLEWARE PËR AUTHENTICATION ===
+// Middleware Per Authentication
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization
 

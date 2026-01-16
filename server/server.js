@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const connect = require('./connect')
 const tasksRoutes = require('./routes/tasks')
-const { router: authRoutes, authMiddleware } = require('./routes/auth')
+const { router: authRoutes } = require('./routes/auth')
 
 const app = express()
 const PORT = process.env.PORT || 4000
