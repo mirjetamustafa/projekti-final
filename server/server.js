@@ -10,6 +10,10 @@ const PORT = process.env.PORT || 4000
 app.use(cors())
 app.use(express.json()) // për të lexuar JSON nga frontend
 
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Server is working' })
+})
+
 // Routes
 app.use('/api/tasks', tasksRoutes)
 
@@ -18,10 +22,10 @@ const startServer = async () => {
   try {
     await connect.connectToServer()
     app.listen(PORT, () => {
-      console.log(`✅ Server is running on port ${PORT}`)
+      console.log(`Server is running on port ${PORT}`)
     })
   } catch (err) {
-    console.error('❌ Failed to start server:', err)
+    console.error('Failed to start server:', err)
   }
 }
 
