@@ -1,18 +1,18 @@
 import Input from '../shared/Input/Input'
 import Select from '../shared/Select/Select'
+import Textarea from '../shared/Textarea/Textarea'
+import Button from '../shared/Button/Button'
 import {
   categoryOptions,
   priorityOptions,
   statusOptions,
 } from '../shared/utils/categoryColors'
 
-import Button from '../shared/Button/Button'
-import Textarea from '../shared/Textarea/Textarea'
 import type { TaskFormType, TaskResponse } from '../../api/Task/task.types'
 import React, { useEffect, useState } from 'react'
 import { createTask } from '../../api/Task/task.client'
-import { toast } from 'react-toastify'
 import { updateTask } from '../../api/Task/task'
+import { toast } from 'react-toastify'
 
 const initialValues: TaskFormType = {
   title: '',
@@ -28,18 +28,22 @@ type TaskFormProps = {
 }
 
 const TaskForm = ({ initialData, onSuccess }: TaskFormProps) => {
-  const [formValues, setFormValues] = useState<TaskFormType>(
-    initialData
-      ? {
-          title: initialData.title,
-          description: initialData.description,
-          project: initialData.project,
-          status: initialData.status,
-          priority: initialData.priority,
-        }
-      : initialValues
-  )
+  const [formValues, setFormValues] = useState<TaskFormType>(initialValues)
   const [errors, setErrors] = useState<Partial<TaskFormType>>({})
+
+  useEffect(() => {
+    if (initialData) {
+      setFormValues({
+        title: initialData.title,
+        description: initialData.description,
+        project: initialData.project,
+        status: initialData.status,
+        priority: initialData.priority,
+      })
+    } else {
+      setFormValues(initialValues)
+    }
+  }, [initialData])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -83,8 +87,9 @@ const TaskForm = ({ initialData, onSuccess }: TaskFormProps) => {
         await createTask(formValues)
         toast.success('Task created successfully!')
       }
-      onSuccess?.()
+
       setFormValues(initialValues)
+      onSuccess?.()
     } catch (err: any) {
       console.log(err.response?.data)
       if (err.response?.data.errors) {
@@ -95,19 +100,6 @@ const TaskForm = ({ initialData, onSuccess }: TaskFormProps) => {
       }
     }
   }
-  useEffect(() => {
-    if (initialData) {
-      setFormValues({
-        title: initialData.title,
-        description: initialData.description,
-        project: initialData.project,
-        status: initialData.status,
-        priority: initialData.priority,
-      })
-    } else {
-      setFormValues(initialValues)
-    }
-  }, [initialData])
 
   return (
     <form onSubmit={handleSubmit}>

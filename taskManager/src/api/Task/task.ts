@@ -17,10 +17,17 @@ export const getTask = () => {
   })
 }
 
-export const updateTask = (id: string, data: TaskResponse) => {
+export const updateTask = (_id: string, data: TaskResponse) => {
   return apiRequest({
-    url: `api/tasks/${id}`,
+    url: `api/tasks/${_id}`,
     method: 'PUT',
     data,
+  })
+}
+
+export const deleteTask = (_id: string) => {
+  return apiRequest({
+    url: `api/tasks/${_id}`,
+    method: 'DELETE',
   })
 }
