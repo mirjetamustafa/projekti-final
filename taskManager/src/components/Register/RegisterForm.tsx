@@ -5,6 +5,7 @@ import PasswordField from '../shared/PasswordField/PasswordField'
 
 import { toast } from 'react-toastify'
 import { register } from '../../api/User/user'
+import { Link } from 'react-router-dom'
 
 const initialForm = {
   name: '',
@@ -99,9 +100,13 @@ const RegisterForm = () => {
           </form>
           <p className="text-xs text-center text-gray-500">
             Already have an account?{' '}
-            <span className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500">
+            <Link
+              to="/login"
+              className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500"
+            >
+              {' '}
               Sign in
-            </span>
+            </Link>
           </p>
         </div>
       </div>

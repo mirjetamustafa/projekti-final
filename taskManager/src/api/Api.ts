@@ -17,13 +17,13 @@ export async function apiRequest<D = unknown, R = unknown>({
 }: AxiosRequestOptions<D>): Promise<AxiosResponse<R>> {
   try {
     const response = await axios.request<D, AxiosResponse<R>>({
-      baseURL: import.meta.env.VITE_SERVER_URL, // psh: http://localhost:4000/
+      baseURL: import.meta.env.VITE_SERVER_URL,
       url,
       method,
       data,
       params,
       headers: {
-        'Content-Type': 'application/json', // gjithmonë JSON
+        'Content-Type': 'application/json',
         ...headers,
       },
     })

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, {
+import {
   createContext,
   useContext,
   useState,
@@ -11,6 +11,8 @@ import { loginUser } from '../api/User/user'
 
 interface User {
   token: string
+  name: string
+  email?: string
 }
 
 interface AuthContextType {
@@ -21,13 +23,7 @@ interface AuthContextType {
   logout: () => void
 }
 
-export const AuthContext = createContext<AuthContextType>({
-  user: null,
-  isAuthenticated: false,
-  isLoading: true,
-  login: async () => {},
-  logout: () => {},
-})
+export const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 
 export const useAuthContext = () => useContext(AuthContext)
 
@@ -37,10 +33,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      setUser({ token })
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`
+    const storedUser = localStorage.getItem('user')
+    if (storedUser) {
+      const parsedUser: User = JSON.parse(storedUser)
+      setUser(parsedUser)
+      axios.defaults.headers.common.Authorization = `Bearer ${parsedUser.token}`
     }
     setIsLoading(false)
   }, [])
@@ -49,11 +46,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true)
     try {
       const res = await loginUser(credentials)
-      const token = res.data.token
-      setUser({ token })
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`
+      const { token, user: userData } = res.data
+
+      const newUser: User = {
+        token,
+        name: userData.name,
+        email: userData.email,
+      }
+
+      setUser(newUser)
+
       localStorage.setItem('token', token)
+      localStorage.setItem('user', JSON.stringify(newUser))
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`
+
       navigate('/')
+      setIsLoading(false)
     } catch (err) {
       console.error(err)
       throw err
@@ -63,6 +71,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null)
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     delete axios.defaults.headers.common.Authorization
     navigate('/login')
   }

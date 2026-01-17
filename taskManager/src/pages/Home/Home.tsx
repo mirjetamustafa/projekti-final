@@ -81,10 +81,6 @@ const Home = () => {
     return matchCategory && matchStatus && matchPriority && matchSearch
   })
 
-  // const filteredTasks = selectedCategory
-  //   ? tasks.filter((task) => task.project === selectedCategory)
-  //   : tasks
-
   return (
     <div>
       <Header />

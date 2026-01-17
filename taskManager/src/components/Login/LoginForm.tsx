@@ -2,8 +2,9 @@ import { useState } from 'react'
 import Button from '../shared/Button/Button'
 import Input from '../shared/Input/Input'
 import PasswordField from '../shared/PasswordField/PasswordField'
-import { loginUser } from '../../api/User/user'
 import { toast } from 'react-toastify'
+import { useAuthContext } from '../../lib/AuthContext'
+import { Link } from 'react-router-dom'
 
 const initialForm = {
   email: '',
@@ -12,6 +13,7 @@ const initialForm = {
 
 const LoginForm = () => {
   const [loginData, setLoginData] = useState(initialForm)
+  const { login } = useAuthContext()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -20,11 +22,9 @@ const LoginForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const res = await loginUser(loginData)
-      console.log('Logged in user:', res.data)
+      await login(loginData)
       toast.success('Login successful!')
-    } catch (err: any) {
-      console.error(err)
+    } catch {
       toast.error('Login failed')
     }
   }
@@ -40,7 +40,6 @@ const LoginForm = () => {
             <div className=" m-3">
               <Input
                 label="Email"
-                type="email"
                 name="email"
                 value={loginData.email}
                 onChange={handleChange}
@@ -63,9 +62,12 @@ const LoginForm = () => {
           </form>
           <p className="text-xs text-center text-gray-500">
             Don't have an account?{' '}
-            <span className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500">
+            <Link
+              to="/register"
+              className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500"
+            >
               Sign up
-            </span>
+            </Link>
           </p>
         </div>
       </div>

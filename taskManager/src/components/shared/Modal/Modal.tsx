@@ -1,6 +1,5 @@
-import { useEffect, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import Close from '../../../assets/close.svg?react'
-import Button from '../Button/Button'
 
 type ModalProps = {
   isOpen: boolean

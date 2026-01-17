@@ -8,10 +8,6 @@ function App() {
   return (
     <div className="">
       <ToastContainer />
-      {/* <Home /> */}
-      {/* <Register /> */}
-      {/* <Login /> */}
-
       <BrowserRouter>
         <AuthProvider>
           <Routes />
