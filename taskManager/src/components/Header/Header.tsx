@@ -2,10 +2,8 @@ import UserIcon from '../../assets/user.svg?react'
 import LogoutIcon from '../../assets/logout.svg?react'
 import Button from '../shared/Button/Button'
 import { useAuthContext } from '../../lib/AuthContext'
-// useAuthContext importon custom hook per te marre informacionin e perdoruesti user funksionin logout
+
 const Header = () => {
-  // therret hookun useAuthContext dhe nxjerr logout funksionin per daljen nga llogaria
-  // user objekti me informacion te perdoruesit
   const { logout, user } = useAuthContext()
   return (
     <>
