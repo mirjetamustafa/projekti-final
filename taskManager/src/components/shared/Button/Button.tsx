@@ -1,5 +1,5 @@
 type ButtonProps = {
-  children: React.ReactNode // children: React.ReactNode → Përmbajtja që do shfaqet brenda butonit (tekst, ikonë, apo elemente të tjera React).
+  children: React.ReactNode
   onClick?: () => void
   type?: 'button' | 'submit'
   variant?: 'active' | 'icon'
