@@ -2,11 +2,17 @@ import UserIcon from '../../assets/user.svg?react'
 import LogoutIcon from '../../assets/logout.svg?react'
 import Button from '../shared/Button/Button'
 import { useAuthContext } from '../../lib/AuthContext'
+// useAuthContext importon custom hook per te marre informacionin e perdoruesti user funksionin logout
 const Header = () => {
+  // therret hookun useAuthContext dhe nxjerr logout funksionin per daljen nga llogaria
+  // user objekti me informacion te perdoruesit
   const { logout, user } = useAuthContext()
   return (
     <>
       <div className="flex justify-between p-5">
+        {' '}
+        {/*
+         */}
         <div>
           <div className="">
             <h2 className="font-semibold">Task Manager</h2>
@@ -21,7 +27,7 @@ const Header = () => {
               <UserIcon className="w-4 h-4 text-gray-500" />
               <p className="text-gray-600">{user?.name}</p>
             </div>
-            <div className="flex">
+            <div className="">
               <Button
                 type="button"
                 onClick={logout}

@@ -1,5 +1,5 @@
 type ButtonProps = {
-  children: React.ReactNode
+  children: React.ReactNode // children: React.ReactNode → Përmbajtja që do shfaqet brenda butonit (tekst, ikonë, apo elemente të tjera React).
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
   variant?: 'default' | 'active' | 'icon'
@@ -10,11 +10,10 @@ const Button = ({
   children,
   onClick,
   type = 'button',
-  variant = 'default',
+  variant = 'active',
   className = '',
 }: ButtonProps) => {
   const variants: Record<string, string> = {
-    default: 'w-full text-xs font-bold text-gray-700  px-3 py-2 rounded-md',
     active: 'w-full text-xs font-bold text-gray-700 px-3 py-2 rounded-md',
     icon: 'w-auto p-2 text-white bg-blue-600 hover:bg-blue-700 flex items-center justify-center',
   }
