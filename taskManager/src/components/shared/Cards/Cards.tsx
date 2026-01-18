@@ -11,6 +11,21 @@ type CardsProps = {
   onDelete?: () => void
 }
 
+/*
+🔹 Tipet TypeScript për props të komponentit Cards:
+
+title → titulli i kartës (obligator)
+
+description → opsionale, përshkrim i kartës
+
+status → 'in progress' | 'done' | 'todo' për ngjyrosje
+
+category → emri i kategorisë
+
+priority → 'low' | 'medium' | 'high' (opsionale)
+onEdit, onDelete → funksione opsionale që thirren kur klikohet Edit/Delete
+*/
+
 const statusStyle = {
   'in progress': 'bg-blue-100 text-blue-700',
   todo: 'bg-gray-100 text-gray-700',
@@ -32,8 +47,11 @@ const Cards = ({
   onEdit,
   onDelete,
 }: CardsProps) => {
-  const [openMenu, setOpenMenu] = useState(false)
+  const [openMenu, setOpenMenu] = useState(false) // State lokal që kontrollon nëse menu-ja e tre pikave (⋮) është e hapur.
   const menuRef = useRef<HTMLDivElement>(null)
+  // Ref për div-in e menu-së.
+  //Përdoret për të kuptuar klik jashtë menu-së.
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -45,6 +63,16 @@ const Cards = ({
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+
+  /*
+  🔹 Efekti për klik jashtë menu-së:
+
+Funksioni handleClickOutside kontrollon nëse klikimi ndodhet jashtë menuRef.
+
+Nëse po, mbyll menu-n (setOpenMenu(false)).
+
+Event listener mousedown shtohet kur komponenti mountohet dhe hiqet kur desmontohen.
+  */
 
   return (
     <div
