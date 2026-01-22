@@ -37,7 +37,7 @@ const Cards = ({
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
         setOpenMenu(false)
       }
     }

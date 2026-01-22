@@ -5,16 +5,15 @@ import Home from '../pages/Home/Home'
 import Register from '../pages/Register/Register'
 
 export enum RouteType {
-  PUBLIC,
-  PRIVATE,
-  GUEST,
+  PRIVATE = 'private',
+  PUBLIC = 'public',
 }
 
 export const newRoutes: RouteObject[] = [
   {
     path: '/',
     element: (
-      <AuthenticationRoute routeType="private">
+      <AuthenticationRoute routeType={RouteType.PRIVATE}>
         <Home />
       </AuthenticationRoute>
     ),
@@ -22,7 +21,7 @@ export const newRoutes: RouteObject[] = [
   {
     path: '/login',
     element: (
-      <AuthenticationRoute routeType="public">
+      <AuthenticationRoute routeType={RouteType.PUBLIC}>
         <Login />
       </AuthenticationRoute>
     ),
@@ -30,7 +29,7 @@ export const newRoutes: RouteObject[] = [
   {
     path: '/register',
     element: (
-      <AuthenticationRoute routeType="public">
+      <AuthenticationRoute routeType={RouteType.PUBLIC}>
         <Register />
       </AuthenticationRoute>
     ),

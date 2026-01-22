@@ -46,20 +46,20 @@ const TaskForm = ({ initialData, onSuccess }: TaskFormProps) => {
   }, [initialData])
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target
     setFormValues((prev) => ({ ...prev, [name]: value }))
     setErrors((prev) => ({ ...prev, [name]: '' }))
   }
 
-  const handleSelect = (name: keyof TaskFormType, value: string) => {
+  const handleSelect = (name: string, value: string) => {
     setFormValues((prev) => ({ ...prev, [name]: value }))
     setErrors((prev) => ({ ...prev, [name]: '' }))
   }
 
   const validate = () => {
-    const newErrors: Partial<TaskFormType> = {}
+    const newErrors = {}
     if (!formValues.title.trim()) newErrors.title = 'Title is required'
     if (!formValues.description.trim())
       newErrors.description = 'Description is required'
@@ -123,7 +123,6 @@ const TaskForm = ({ initialData, onSuccess }: TaskFormProps) => {
 
       <Select
         label="Project"
-        name="project"
         options={categoryOptions}
         value={formValues.project}
         onChange={(value) => handleSelect('project', value)}
@@ -132,7 +131,6 @@ const TaskForm = ({ initialData, onSuccess }: TaskFormProps) => {
 
       <Select
         label="Status"
-        name="status"
         options={statusOptions}
         value={formValues.status}
         onChange={(value) => handleSelect('status', value)}
@@ -141,7 +139,6 @@ const TaskForm = ({ initialData, onSuccess }: TaskFormProps) => {
 
       <Select
         label="Priority"
-        name="priority"
         options={priorityOptions}
         value={formValues.priority}
         onChange={(value) => handleSelect('priority', value)}
@@ -149,7 +146,7 @@ const TaskForm = ({ initialData, onSuccess }: TaskFormProps) => {
       />
       <div className="grid grid-cols-2 gap-4">
         <Button
-          type="submit"
+          type="button"
           onClick={() => {
             setFormValues(initialValues)
             onSuccess?.()

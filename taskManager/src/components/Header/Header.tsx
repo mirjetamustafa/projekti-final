@@ -8,9 +8,6 @@ const Header = () => {
   return (
     <>
       <div className="flex justify-between p-5">
-        {' '}
-        {/*
-         */}
         <div>
           <div className="">
             <h2 className="font-semibold">Task Manager</h2>

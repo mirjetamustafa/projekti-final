@@ -20,13 +20,12 @@ import { toast } from 'react-toastify'
 
 const Home = () => {
   const [open, setOpen] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null
-  )
   const [tasks, setTasks] = useState<TaskResponse[]>([])
   const [editTask, setEditTask] = useState<TaskResponse | null>(null)
-
   const [searchText, setSearchText] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null,
+  )
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null)
   const [selectedPriority, setSelectedPriority] = useState<string | null>(null)
 
@@ -94,6 +93,7 @@ const Home = () => {
           <div className="bg-white p-6">
             <Input
               placeholder="Search tasks..."
+              type="text"
               isSearch
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
@@ -126,6 +126,7 @@ const Home = () => {
       </div>
       <div className="flex justify-end bg-gray-50">
         <Button
+          type="button"
           onClick={handleCreate}
           variant="icon"
           className="-mt-12 mx-3 mb-2 rounded-full"

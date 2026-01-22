@@ -7,6 +7,9 @@ export const register = (data: RegisterInput) => {
     method: 'POST',
     data: {
       credentials: data,
+      // Body i request-it
+      //Dërgon objekt me key credentials
+      //Brenda tij janë të dhënat e regjistrimit
     },
   })
 }

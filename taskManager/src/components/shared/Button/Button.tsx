@@ -13,7 +13,7 @@ const Button = ({
   className = '',
 }: ButtonProps) => {
   const variants: Record<string, string> = {
-    default: 'w-full text-xs font-bold text-gray-700 px-3 py-2 rounded-md ',
+    default: 'w-full text-xs font-bold text-gray-700 px-3 py-2 rounded-md  ',
     active: 'w-full text-xs font-bold text-gray-700 px-3 py-2 rounded-md',
     icon: 'w-auto p-2 text-white bg-blue-600 hover:bg-blue-700 flex items-center justify-center',
   }
