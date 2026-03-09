@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 })
 
 app.get('/api/test', (req, res) => {
-  res.json({ message: 'Server is working' })
+  res.json({ message: 'task is working' })
 })
 
 // Auth

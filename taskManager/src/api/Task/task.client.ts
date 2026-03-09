@@ -1,14 +1,10 @@
-import { apiRequest } from '../Api' // ky fie eshte  service / api layer
-// ndermjetes mes React components dhe backend-it
+import { apiRequest } from '../Api'
 
 export const createTask = async (taskData: any) => {
-  // async --> sepse ben request HTTP (eshte operacon asinkron)
   return await apiRequest({
-    // await -> pret derisa backend-i te pergjigjet
-    // return ia kthen pergjigjen componentit
-    url: 'api/tasks', // rruga e backendit http://localhost:4000/api/tasks
-    method: 'POST', // krijm i te dhenave
-    data: taskData, // data = body i request-it shkon te backendi si req.body
+    url: 'api/tasks',
+    method: 'POST',
+    data: taskData,
   })
 }
 

@@ -61,7 +61,7 @@ tasksRoutes.put('/:id', async (req, res) => {
       .collection('tasks')
       .updateOne(
         { _id: new ObjectId(id) },
-        { $set: { title, description, project, status, priority } }
+        { $set: { title, description, project, status, priority } },
       )
 
     if (result.matchedCount === 0) {
