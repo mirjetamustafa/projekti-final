@@ -9,7 +9,7 @@ type TaskProps = {
 
 const Task = ({ tasks, onEdit, onDelete }: TaskProps) => {
   return (
-    <div className="grid grid-cols-3 gap-4 overflow-y-scroll h-110">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {tasks.map((task) => (
         <div key={task._id}>
           <Cards

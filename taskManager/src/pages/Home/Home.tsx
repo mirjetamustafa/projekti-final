@@ -83,13 +83,15 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <div className="flex h-[657px] bg-gray-50">
-        <Sidebar
-          selectedCategory={selectedCategory}
-          onSelectedCategory={setSelectedCategory}
-        />
+      <div className="flex min-h-screen bg-gray-50">
+        <div className="hidden md:block">
+          <Sidebar
+            selectedCategory={selectedCategory}
+            onSelectedCategory={setSelectedCategory}
+          />
+        </div>
 
-        <main className="flex-1">
+        <main className="flex-1 w-full">
           <div className="bg-white p-6">
             <Input
               placeholder="Search tasks..."
@@ -100,7 +102,7 @@ const Home = () => {
               icon={<SearchIcon className="w-4 h-4 text-gray-400" />}
             />
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
               <Select
                 options={statusOptionsFilter}
                 value={selectedStatus || ''}
@@ -115,7 +117,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="p-6">
+          <div className="p-4 sm:p-6 overflow-y-auto">
             <Task
               tasks={filteredTasks}
               onEdit={handleEdit}
@@ -124,12 +126,12 @@ const Home = () => {
           </div>
         </main>
       </div>
-      <div className="flex justify-end bg-gray-50">
+      <div className="fixed bottom-5 right-5 z-50">
         <Button
           type="button"
           onClick={handleCreate}
           variant="icon"
-          className="-mt-12 mx-3 mb-2 rounded-full"
+          className="rounded-full shadow-lg"
         >
           <Plus />
         </Button>

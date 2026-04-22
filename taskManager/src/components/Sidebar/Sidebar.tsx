@@ -11,7 +11,7 @@ const categories: Category[] = ['Personal', 'Work', 'Ideas']
 
 const Sidebar = ({ selectedCategory, onSelectedCategory }: SidebarProps) => {
   return (
-    <aside className="w-64 border-r p-4 space-y-1">
+    <aside className="w-64 border-r border-gray-200 p-4 space-y-1 h-full">
       <Button
         onClick={() => onSelectedCategory(null)}
         variant={selectedCategory === null ? 'active' : 'default'}
